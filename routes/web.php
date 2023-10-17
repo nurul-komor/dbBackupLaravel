@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Artisan::command('logs:clear', function () {
+    array_map('unlink', array_filter((array) glob(storage_path('logs/*.log'))));
+    $this->comment('Logs have been cleared!');
+})->describe('Clear log files');
